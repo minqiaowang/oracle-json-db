@@ -1,0 +1,13 @@
+{
+    "workshoptitle": "Oracle JSON Database",
+    "tutorials": [
+        {
+            "title": "Lab 1: Use SQL for Oracle JSON DB",
+            "filename": "../../oracle-json-sql/oracle-json-sql.md"
+        },
+        {
+            "title": "Lab 2: SODA and Oracle Database API for MongoDB",
+            "filename": "../../soda-mongodb-api/soda-mongodb-api.md"
+        }
+    ]
+}
