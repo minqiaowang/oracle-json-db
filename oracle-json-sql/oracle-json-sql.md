@@ -73,7 +73,7 @@ JSON 语言标准以文本方式定义 JSON 数据：它由标准语法中的 Un
 
    ![image-20221008104226597](images/image-20221008104226597.png)
 
-7. ds
+   
 
 
 
@@ -172,8 +172,6 @@ JSON 语言标准以文本方式定义 JSON 数据：它由标准语法中的 Un
 
    
 
-3. sdaf
-
 
 
 ## Task 3: 简单查询JSON数据
@@ -207,9 +205,7 @@ JSON 语言标准以文本方式定义 JSON 数据：它由标准语法中的 Un
 
    ![image-20221008192734509](images/image-20221008192734509.png)
 
-5. asdf
-
-6. asdf
+   
 
 ## Task 4: 修改JSON数据
 
@@ -221,73 +217,73 @@ json_mergepatch在某些上下文中更易于使用，其中补丁文档是通�
 
 1. 使用json_transform更新j_purchaseorder.po_document中的所有文档。将字段lastUpdated的值设置为当前时间戳。qu缺省操作是：如果字段已经存在，则替换其值；否则，将添加字段及其值。所以在本例中会增加一个lastUpdate字段。
 
-   ```
-   UPDATE j_purchaseorder SET po_document =
-     json_transform(po_document, SET '$.lastUpdated' = SYSTIMESTAMP);
-   ```
+    ```
+    UPDATE j_purchaseorder SET po_document =
+      json_transform(po_document, SET '$.lastUpdated' = SYSTIMESTAMP);
+    ```
 
-   
+    
 
 2. 使用json_transform删除某个字段，如：`Special Instructions`
 
-   ```
-   SELECT json_transform(po_document, REMOVE '$."Special Instructions"'
-                         RETURNING CLOB PRETTY) as jsontrans
-     FROM j_purchaseorder;
-   ```
+    ```
+    SELECT json_transform(po_document, REMOVE '$."Special Instructions"'
+                          RETURNING CLOB PRETTY) as jsontrans
+      FROM j_purchaseorder;
+    ```
 
-   
+    
 
 3. 使用json_transform创建或替换键值
 
-   ```
-   SELECT json_transform(po_document,
-                  SET '$.ShippingInstructions.Address' =
-                      '{"street":"8 Timbly Rd.",
-                        "city":"Penobsky",
-                        "state":"UT"}'
-                      FORMAT JSON RETURNING CLOB PRETTY) as jsontrans
-        FROM j_purchaseorder;
-   ```
+    ```
+    SELECT json_transform(po_document,
+                   SET '$.ShippingInstructions.Address' =
+                       '{"street":"8 Timbly Rd.",
+                         "city":"Penobsky",
+                         "state":"UT"}'
+                       FORMAT JSON RETURNING CLOB PRETTY) as jsontrans
+         FROM j_purchaseorder;
+    ```
 
-   
+    
 
 4. 使用json_mergepatch去除`Special Instructions`键值
 
-   ```
-   select json_mergepatch(po_document, '{"Special Instructions":null}'
-        PRETTY)
-        FROM j_purchaseorder;
-   ```
+    ```
+    select json_mergepatch(po_document, '{"Special Instructions":null}'
+         PRETTY)
+         FROM j_purchaseorder;
+    ```
 
-   
+    
 
 5. 下列语句使用json_mergepatch，修改了JSON文档：
 
-   - 增加了一组"Category":"Platinum"键值
-   - 去除"ShippingInstructions"键值
-   - 修改"Special Instructions"的值为Contact User SBELL
-   - 修改"LineItems"的值为空数组
-   - 删除了"AllowPartialShipment"键值
-   - 增加了"Allow Partial Shipment":false键值对
+    - 增加了一组"Category":"Platinum"键值
+    - 去除"ShippingInstructions"键值
+    - 修改"Special Instructions"的值为Contact User SBELL
+    - 修改"LineItems"的值为空数组
+    - 删除了"AllowPartialShipment"键值
+    - 增加了"Allow Partial Shipment":false键值对
 
-   ```
-   select json_mergepatch(po_document, '{ 
-     "Category" : "Platinum",
-     "ShippingInstructions" : null,
-     "Special Instructions" : "Contact User SBELL",
-     "LineItems" : [],
-     "AllowPartialShipment" : null,
-     "Allow Partial Shipment" : false }'
-        PRETTY)
-        FROM j_purchaseorder;
-   ```
+    ```
+    select json_mergepatch(po_document, '{ 
+      "Category" : "Platinum",
+      "ShippingInstructions" : null,
+      "Special Instructions" : "Contact User SBELL",
+      "LineItems" : [],
+      "AllowPartialShipment" : null,
+      "Allow Partial Shipment" : false }'
+         PRETTY)
+         FROM j_purchaseorder;
+    ```
 
-   
+    
 
-6. dsf
+    
 
-## Task 4: 加载外部文件到JSON表
+## Task 5: 加载外部文件到JSON表
 
 下面我们将加载更多数据到JSON表中，我们将文本文件上传到OCI的对象存储中，该文件可以从该链接下载：[PurchaseOrder.txt](https://objectstorage.ap-seoul-1.oraclecloud.com/p/lr39i2w3Y-GUQc7COm8voM9cWloD_x6J09bUc3ADOkdmMjw834ca7Wk-oabXmGtu/n/oraclepartnersas/b/external-table/o/PurchaseOrders.txt)。
 
@@ -342,11 +338,11 @@ json_mergepatch在某些上下文中更易于使用，其中补丁文档是通�
 
    ![image-20221008194839586](images/image-20221008194839586.png)
 
-5. sdf
+   
 
 
 
-## Task 5: 使用JSON_VALUE 和 JSON_QUERY查询JSON数据
+## Task 6: 使用`JSON_VALUE` 和 `JSON_QUERY`查询JSON数据
 
 JSON 函数 json_value 和 json_query 可以用于更复杂的查询。 如果您提供的路径表达式与查询的 JSON 数据不匹配，它们可能会返回 NULL 或引发错误。 它们接受可选子句来指定返回值的数据类型（RETURNING 子句），是否将多个值包装为数组（wrapper子句），一般如何处理错误（ON ERROR 子句），以及如何处理丢失的 JSON 字段（ON EMPTY 子句）。
 
@@ -442,11 +438,9 @@ JSON_VALUE接受两个参数，一个JSON列和一个JSON path表达式。它提
 
    
 
-9. sdf
+   
 
-10. sdf
-
-## Task 6: 使用JSON_TABLE以关系型方式访问JSON数据
+## Task 7: 使用`JSON_TABLE`以关系型方式访问JSON数据
 
 JSON_TABLE运算符用于SQL语句的FROM子句中。它支持创建JSON内容的内联关系视图。JSON_TABLE运算符使用一组JSON路径表达式将JSON文档中的内容映射到视图中的列中。一旦JSON文档的内容被展开为列，SQL的所有功能就可以在JSON文档内容上发挥作用。
 
@@ -500,11 +494,9 @@ JSON_TABLE运算符用于SQL语句的FROM子句中。它支持创建JSON内容�
 
    ![image-20221008204418000](images/image-20221008204418000.png)
 
-3. sadf
+   
 
-4. sadf
-
-## Task 7: 使用JSON_EXISTS过滤结果集
+## Task 8: 使用`JSON_EXISTS`过滤结果集
 
 JSON_EXISTS运算符用于SQL语句的WHERE子句中。它用于测试JSON文档是否包含与提供的JSON路径表达式匹配的内容。
 
@@ -570,9 +562,7 @@ JSON_EXISTS运算符接受两个参数，一个JSON列和一个JSON path表达�
 
    
 
-6. asdf
-
-## Task 8: JSON Dataguide
+## Task 9: JSON Dataguide
 
 JSON Dataguide允许您发现有关存储在Oracle数据库中的JSON文档的结构和内容的信息。此信息可以多种方式使用，包括：
 
@@ -666,7 +656,5 @@ JSON Dataguide允许您发现有关存储在Oracle数据库中的JSON文档的�
    ```
 
    
-
-8. sdaf
 
    
