@@ -27,7 +27,7 @@ JSON 数据是无模式的（schemaless），即使使用数据库模式来定�
 
    ![image-20221008103131314](images/image-20221008103131314.png)
 
-3. 在SQL Worksheet中拷贝下列语句并执行，该脚本创建了一个user的用户，并授予了相应的权限。
+3. 在SQL Worksheet中拷贝下列语句并执行，该脚本创建了一个user1的用户，并授予了相应的权限。
 
    ```
    -- USER SQL
@@ -203,13 +203,13 @@ JSON 数据是无模式的（schemaless），即使使用数据库模式来定�
 
 ## Task 4: 修改JSON数据
 
-您可以使用Oracle SQL函数json_transform或json_mergepatch修改json文档的特定部分。这些函数不仅用于更新存储的JSON数据。还可以使用它们在查询中动态修改JSON数据，数据库无需更新。
+您可以使用Oracle SQL函数`json_transform`或`json_mergepatch`修改json文档的特定部分。这些函数不仅用于更新存储的JSON数据。还可以使用它们在查询中动态修改JSON数据，数据库无需更新。
 
-使用json_transform进行更新是分段的：只指定要更改的文档片段以及如何更改。客户端只需要发送更改的位置（使用SQL/JSON路径表达式）和要执行的更新操作。
+使用`json_transform`进行更新是分段的：只指定要更改的文档片段以及如何更改。客户端只需要发送更改的位置（使用SQL/JSON路径表达式）和要执行的更新操作。
 
-json_mergepatch在某些上下文中更易于使用，其中补丁文档是通过比较文档的两个版本生成的。您无需指定或考虑特定的修改位置和操作-生成的修补程序负责更改位置，并且要进行的更改是隐式的。
+`json_mergepatch`在某些上下文中更易于使用，其中补丁文档是通过比较文档的两个版本生成的。您无需指定或考虑特定的修改位置和操作-生成的修补程序负责更改位置，并且要进行的更改是隐式的。
 
-1. 使用json_transform更新j_purchaseorder.po_document中的所有文档。将字段lastUpdated的值设置为当前时间戳。qu缺省操作是：如果字段已经存在，则替换其值；否则，将添加字段及其值。所以在本例中会增加一个lastUpdate字段。
+1. 使用`json_transform`更新`j_purchaseorder.po_document`中的所有文档。将字段lastUpdated的值设置为当前时间戳。qu缺省操作是：如果字段已经存在，则替换其值；否则，将添加字段及其值。所以在本例中会增加一个lastUpdate字段。
 
     ```
     UPDATE j_purchaseorder SET po_document =
@@ -218,7 +218,7 @@ json_mergepatch在某些上下文中更易于使用，其中补丁文档是通�
 
     
 
-2. 使用json_transform删除某个字段，如：`Special Instructions`
+2. 使用`json_transform`删除某个字段，如：`Special Instructions`
 
     ```
     SELECT json_transform(po_document, REMOVE '$."Special Instructions"'
@@ -228,7 +228,7 @@ json_mergepatch在某些上下文中更易于使用，其中补丁文档是通�
 
     
 
-3. 使用json_transform创建或替换键值
+3. 使用`json_transform`创建或替换键值
 
     ```
     SELECT json_transform(po_document,
@@ -242,7 +242,7 @@ json_mergepatch在某些上下文中更易于使用，其中补丁文档是通�
 
     
 
-4. 使用json_mergepatch去除`Special Instructions`键值
+4. 使用`json_mergepatch`去除`Special Instructions`键值
 
     ```
     select json_mergepatch(po_document, '{"Special Instructions":null}'
@@ -252,7 +252,7 @@ json_mergepatch在某些上下文中更易于使用，其中补丁文档是通�
 
     
 
-5. 下列语句使用json_mergepatch，修改了JSON文档：
+5. 下列语句使用`json_mergepatch`，修改了JSON文档：
 
     - 增加了一组"Category":"Platinum"键值
     - 去除"ShippingInstructions"键值
@@ -273,7 +273,11 @@ json_mergepatch在某些上下文中更易于使用，其中补丁文档是通�
          FROM j_purchaseorder;
     ```
 
-    
+6. 清空该JSON表。
+
+    ```
+    truncate table j_purchaseorder;
+    ```
 
     
 
@@ -281,7 +285,7 @@ json_mergepatch在某些上下文中更易于使用，其中补丁文档是通�
 
 下面我们将加载更多数据到JSON表中，我们将文本文件上传到OCI的对象存储中，该文件可以从该链接下载：[PurchaseOrder.txt](https://objectstorage.ap-seoul-1.oraclecloud.com/p/lr39i2w3Y-GUQc7COm8voM9cWloD_x6J09bUc3ADOkdmMjw834ca7Wk-oabXmGtu/n/oraclepartnersas/b/external-table/o/PurchaseOrders.txt)。
 
-1. 创建对象存储认证信息，你可以用自己的用户名，authorize token作为password。
+1. 创建对象存储认证信息，你可以用自己的用户名，Auth Token作为password。
 
    ```
    BEGIN
@@ -338,13 +342,13 @@ json_mergepatch在某些上下文中更易于使用，其中补丁文档是通�
 
 ## Task 6: 使用`JSON_VALUE` 和 `JSON_QUERY`查询JSON数据
 
-JSON 函数 json_value 和 json_query 可以用于更复杂的查询。 如果您提供的路径表达式与查询的 JSON 数据不匹配，它们可能会返回 NULL 或引发错误。 它们接受可选子句来指定返回值的数据类型（RETURNING 子句），是否将多个值包装为数组（wrapper子句），一般如何处理错误（ON ERROR 子句），以及如何处理丢失的 JSON 字段（ON EMPTY 子句）。
+JSON 函数 `json_value` 和 `json_query` 可以用于更复杂的查询。 如果您提供的路径表达式与查询的 JSON 数据不匹配，它们可能会返回 NULL 或引发错误。 它们接受可选子句来指定返回值的数据类型（RETURNING 子句），是否将多个值包装为数组（wrapper子句），一般如何处理错误（ON ERROR 子句），以及如何处理丢失的 JSON 字段（ON EMPTY 子句）。
 
-JSON_VALUE运算符使用JSON路径表达式访问单个标量值。它通常在选择列表中用于返回与JSON路径表达式关联的值，或在WHERE子句中用于根据JSON文档的内容筛选结果集。
+`JSON_VALUE`运算符使用JSON路径表达式访问单个标量值。它通常在选择列表中用于返回与JSON路径表达式关联的值，或在WHERE子句中用于根据JSON文档的内容筛选结果集。
 
-JSON_VALUE接受两个参数，一个JSON列和一个JSON path表达式。它提供了一组修饰符，允许控制返回数据的格式，以及如何处理在计算JSON路径表达式时遇到的任何错误。
+`JSON_VALUE`接受两个参数，一个JSON列和一个JSON path表达式。它提供了一组修饰符，允许控制返回数据的格式，以及如何处理在计算JSON路径表达式时遇到的任何错误。
 
-1. 下面用JSON_VALUE返回不同Cost Center的订单总数
+1. 下面用`JSON_VALUE`返回不同Cost Center的订单总数
 
    ```
    select JSON_VALUE(PO_DOCUMENT ,'$.CostCenter'), count(*)
@@ -354,7 +358,7 @@ JSON_VALUE接受两个参数，一个JSON列和一个JSON path表达式。它提
 
    ![image-20221008195602354](images/image-20221008195602354.png)
 
-2. 我们也可以从数组中访问值。使用index 0从LineItems数组第一个成员内的Part对象访问UPCCode的值。此查询还显示了如何在SQL语句的WHERE子句中使用JSON_VALUE作为过滤器。
+2. 我们也可以从数组中访问值。使用index 0从LineItems数组第一个成员内的Part对象访问UPCCode的值。此查询还显示了如何在SQL语句的WHERE子句中使用`JSON_VALUE`作为过滤器。
 
    ```
    select JSON_VALUE(PO_DOCUMENT ,'$.LineItems[0].Part.UPCCode')
@@ -364,7 +368,7 @@ JSON_VALUE接受两个参数，一个JSON列和一个JSON path表达式。它提
 
    ![image-20221008200113164](images/image-20221008200113164.png)
 
-   JSON_VALUE函数还提供了处理将JSON PATH表达式应用于JSON文档时可能遇到的错误的选项。可用选项包括：
+   `JSON_VALUE`函数还提供了处理将JSON PATH表达式应用于JSON文档时可能遇到的错误的选项。可用选项包括：
 
    - NULL ON ERROR：默认值。如果在将JSON路径表达式应用于JSON文档时遇到错误，则假定结果为SQL NULL，并且不会引发错误。
 
@@ -372,7 +376,7 @@ JSON_VALUE接受两个参数，一个JSON列和一个JSON path表达式。它提
 
    - DEFAULT on ERROR：开发人员指定遇到错误时返回的文本值。
 
-3. 假设我们输入错误的路径，`ShippingInstruction`而不是`ShippingInstructions`，缺省返回NULL
+3. 假设我们输入错误的路径，`ShippingInstruction`而不是`ShippingInstructions`，缺省返回NULL。
 
    ```
    select JSON_VALUE(PO_DOCUMENT ,'$.ShippingInstruction.Address')
@@ -390,9 +394,9 @@ JSON_VALUE接受两个参数，一个JSON列和一个JSON path表达式。它提
     where JSON_VALUE(PO_DOCUMENT ,'$.PONumber' returning NUMBER(10)) = 450;
    ```
 
-   JSON_QUERY是JSON_VALUE的补充。JSON_VALUE只能返回标量值，而JSON_QUERY只能返回对象或数组。与JSON_VALUE一样，JSON_QUERY接受两个参数，一个JSON列和一个JSON路径表达式。它提供了一组修饰符，允许控制返回数据的格式，以及如何处理在计算JSON路径表达式时遇到的任何错误。
+   
 
-5. 以下查询返回订单里的所有商品，返回的是JSON数组。
+5. `JSON_QUERY`是`JSON_VALUE`的补充。`JSON_VALUE`只能返回标量值，而`JSON_QUERY`只能返回对象或数组。与`JSON_VALUE`一样，`JSON_QUERY`接受两个参数，一个JSON列和一个JSON路径表达式。它提供了一组修饰符，允许控制返回数据的格式，以及如何处理在计算JSON路径表达式时遇到的任何错误。以下查询返回订单里的所有商品，返回的是JSON数组。
 
    ```
    select JSON_QUERY(PO_DOCUMENT ,'$.LineItems')
@@ -402,7 +406,7 @@ JSON_VALUE接受两个参数，一个JSON列和一个JSON path表达式。它提
 
    ![image-20221008201859370](images/image-20221008201859370.png)
 
-6. 我们可以使用PRETTY关键字格式化JSON_query的输出。我们可以点击眼镜图标查看详细返回信息
+6. 我们可以使用PRETTY关键字格式化`JSON_query`的输出。我们可以点击眼镜图标查看详细返回信息
 
    ```
    select JSON_QUERY(PO_DOCUMENT ,'$.LineItems' PRETTY)
@@ -412,7 +416,7 @@ JSON_VALUE接受两个参数，一个JSON列和一个JSON path表达式。它提
 
    ![image-20221008202159958](images/image-20221008202159958.png)
 
-7. 通过index只取其中一条商品信息。
+7. 通过index只取其中一条商品信息，index为0表示数组的第一个成员。
 
    ```
    select JSON_QUERY(PO_DOCUMENT ,'$.LineItems[0]' PRETTY)
@@ -420,9 +424,9 @@ JSON_VALUE接受两个参数，一个JSON列和一个JSON path表达式。它提
     where JSON_VALUE(PO_DOCUMENT ,'$.PONumber' returning NUMBER(10)) = 450;
    ```
 
-   
+   ![image-20221010164747828](images/image-20221010164747828.png)
 
-8. 使用WITH ARRAY WRAPPER强制JSON_query始终以数组形式返回结果。在本例中，索引为星号，表示应处理LineItems数组的所有成员，JSON路径表达式中的最后一个键也是星号，表明应处理Part键的所有子项。执行此查询的结果是一个包含6个项的数组。前3项来自与LineItems数组第一个成员的Part键关联的Description、UnitPrice和UPCCode。第二个3来自与LineItems数组第二个成员的Part键关联的Description、UnitPrice和UPCCode。还要注意，由于Description和UPCCode是字符串，UnitPrice是数字，因此生成的数组本质上是异构的，包含字符串和数值的混合。
+8. 使用WITH ARRAY WRAPPER强制`JSON_query`始终以数组形式返回结果。在本例中，索引为星号，表示应处理LineItems数组的所有成员，JSON路径表达式中的最后一个键也是星号，表明应处理Part键的所有子项。执行此查询的结果是一个包含6个项的数组。前3项来自与LineItems数组第一个成员的Part键关联的Description、UnitPrice和UPCCode。第二个3来自与LineItems数组第二个成员的Part键关联的Description、UnitPrice和UPCCode。还要注意，由于Description和UPCCode是字符串，UnitPrice是数字，因此生成的数组本质上是异构的，包含字符串和数值的混合。
 
    ```
    select JSON_QUERY(PO_DOCUMENT, '$.LineItems[*].Part.*' WITH ARRAY WRAPPER)
@@ -430,13 +434,13 @@ JSON_VALUE接受两个参数，一个JSON列和一个JSON path表达式。它提
     where JSON_VALUE(PO_DOCUMENT ,'$.PONumber' returning NUMBER(10)) = 450;
    ```
 
-   
+   ![image-20221010164655153](images/image-20221010164655153.png)
 
    
 
 ## Task 7: 使用`JSON_TABLE`以关系型方式访问JSON数据
 
-JSON_TABLE运算符用于SQL语句的FROM子句中。它支持创建JSON内容的内联关系视图。JSON_TABLE运算符使用一组JSON路径表达式将JSON文档中的内容映射到视图中的列中。一旦JSON文档的内容被展开为列，SQL的所有功能就可以在JSON文档内容上发挥作用。
+`JSON_TABLE`运算符用于SQL语句的FROM子句中。它支持创建JSON内容的内联关系视图。`JSON_TABLE`运算符使用一组JSON路径表达式将JSON文档中的内容映射到视图中的列中。一旦JSON文档的内容被展开为列，SQL的所有功能就可以在JSON文档内容上发挥作用。
 
 1. 下面显示了如何从文档中最多出现一次的值投影一组列。这些值可以来自任何级别的嵌套，只要它们不是来自作为数组一部分的键或从数组派生的键，除非使用索引来标识数组中的一个项。
 
@@ -459,7 +463,7 @@ JSON_TABLE运算符用于SQL语句的FROM子句中。它支持创建JSON内容�
 
    ![image-20221008203858935](images/image-20221008203858935.png)
 
-2. 下列查询显示了如何使用数组。为了将数组的内容展开为一组行，必须使用NESTED PATH语法处理数组。当JSON_TABLE运算符包含NESTED PATH子句时，它将为最深的NESTED PETH子句引用的数组的每个成员输出一行。该行将包含由JSON_TABLE表达式的每个级别定义的所有列。
+2. 下列查询显示了如何使用数组。为了将数组的内容展开为一组行，必须使用NESTED PATH语法处理数组。当`JSON_TABLE`运算符包含NESTED PATH子句时，它将为最深的NESTED PETH子句引用的数组的每个成员输出一行。该行将包含由`JSON_TABLE`表达式的每个级别定义的所有列。
 
    ```
    select D.*
@@ -492,9 +496,9 @@ JSON_TABLE运算符用于SQL语句的FROM子句中。它支持创建JSON内容�
 
 ## Task 8: 使用`JSON_EXISTS`过滤结果集
 
-JSON_EXISTS运算符用于SQL语句的WHERE子句中。它用于测试JSON文档是否包含与提供的JSON路径表达式匹配的内容。
+`JSON_EXISTS`运算符用于SQL语句的WHERE子句中。它用于测试JSON文档是否包含与提供的JSON路径表达式匹配的内容。
 
-JSON_EXISTS运算符接受两个参数，一个JSON列和一个JSON path表达式。如果文档包含匹配JSON路径表达式的键，则返回TRUE，否则返回FALSE。JSON_EXISTS提供了一组修饰符，用于控制如何处理在计算JSON路径表达式时遇到的任何错误。
+`JSON_EXISTS`运算符接受两个参数，一个JSON列和一个JSON path表达式。如果文档包含匹配JSON路径表达式的键，则返回TRUE，否则返回FALSE。`JSON_EXISTS`提供了一组修饰符，用于控制如何处理在计算JSON路径表达式时遇到的任何错误。
 
 1. 下列查询统计ShippingInstructions键下的Address键包含state键的JSON文档数：
 
@@ -506,7 +510,7 @@ JSON_EXISTS运算符接受两个参数，一个JSON列和一个JSON path表达�
 
    
 
-2. JSON_VALUE无法区分没有键的文档和有键但值为空的文档。下列语句JSON_VALUE返回NULL，因为该键在文档中不存在，或者是因为该键存在，但该值包含NULL或空值。
+2. `JSON_VALUE`无法区分没有键的文档和有键但值为空的文档。下列语句`JSON_VALUE`返回NULL，因为该键在文档中不存在，或者是因为该键存在，但该值包含NULL或空值。
 
    ```
    select JSON_VALUE(PO_DOCUMENT ,'$.ShippingInstructions.Address.county'), 
@@ -517,7 +521,7 @@ JSON_EXISTS运算符接受两个参数，一个JSON列和一个JSON path表达�
 
    ![image-20221009085408217](images/image-20221009085408217.png)
 
-3. JSON_EXISTS可以区分没有键的文档和有键但值为空的文档。下列语句返回的NULL，只包括该键存在，但该值包含NULL或空值的记录。
+3. `JSON_EXISTS`可以区分没有键的文档和有键但值为空的文档。下列语句返回的NULL，只包括该键存在，但该值包含NULL或空值的记录。
 
    ```
    select JSON_VALUE(PO_DOCUMENT ,'$.ShippingInstructions.Address.county'),
@@ -529,7 +533,7 @@ JSON_EXISTS运算符接受两个参数，一个JSON列和一个JSON path表达�
 
    ![image-20221009085326590](images/image-20221009085326590.png)
 
-4. JSON_EXISTS还支持谓词使用的JSON路径表达式。谓词通过添加“？”来指定然后在括号中指定条件。在谓词中，@符号用于引用父键。变量由前缀为$符号的名称表示。变量的值是使用JSON_EXISTS运算符的PASSING子句设置的。这允许在开发应用程序时使用绑定变量提供值。下面的语句显示了在JSON路径表达式中使用谓词的一个非常简单的示例。PONumber是顶级JSON对象的成员。
+4. `JSON_EXISTS`还支持谓词使用的JSON路径表达式。谓词通过添加`?`来指定然后在括号中指定条件。在谓词中，`@`符号用于引用父键。变量由前缀为`$`符号的名称表示。变量的值是使用`JSON_EXISTS`运算符的PASSING子句设置的。这允许在开发应用程序时使用绑定变量提供值。下面的语句显示了在JSON路径表达式中使用谓词的一个非常简单的示例。PONumber是顶级JSON对象的成员。
 
    ```
    select j.PO_DOCUMENT
@@ -568,7 +572,7 @@ JSON Dataguide允许您发现有关存储在Oracle数据库中的JSON文档的�
 
 为了生成JSON Dataguide，我们需要对数据库中的JSON内容进行分析。以下语句显示了如何在存储在Oracle数据库中的一组JSON文档上创建Dataguide，以及如何使用Dataguide来发现存储在数据库中的文档的元数据。它还展示了如何使用Dataguide创建关系视图，以支持基于SQL的报告和分析的方式展示JSON文档的内容。
 
-1. 我们可以使用json_dataguide聚合操作符。就像其他聚合操作符一样，json_dataguide扫描json文档列，并动态构建dataguide。用户可以向语句中添加where子句或sampling子句。
+1. 我们可以使用`json_dataguide`聚合操作符。就像其他聚合操作符一样，`json_dataguide`扫描json文档列，并动态构建dataguide。用户可以向语句中添加where子句或sampling子句。
 
    ```
    select json_dataguide(po_document) from j_purchaseorder;
@@ -603,7 +607,7 @@ JSON Dataguide允许您发现有关存储在Oracle数据库中的JSON文档的�
 
    
 
-4. 创建Dataguide的另一种方法是使用JSON搜索索引。由于Dataguide基于JSON搜索索引基础架构，我们可以选择使用单个索引来驱动Dataguide和搜索操作。但是，如果我们只需要Dataguide功能，我们可以通过使用create-search-index语句的parameters子句指定选项“search_on none”和“dataguide-on”来避免与维护搜索索引相关的开销。
+4. 创建Dataguide的另一种方法是使用JSON搜索索引。由于Dataguide基于JSON搜索索引基础架构，我们可以选择使用单个索引来驱动Dataguide和搜索操作。但是，如果我们只需要Dataguide功能，我们可以通过使用`create-search-index`语句的parameters子句指定选项`“search_on none”`和`“dataguide-on”`来避免与维护搜索索引相关的开销。
 
    ```
    create search index JSON_SEARCH_INDEX on J_PURCHASEORDER (PO_DOCUMENT) for json parameters('search_on none dataguide on');
@@ -611,7 +615,7 @@ JSON Dataguide允许您发现有关存储在Oracle数据库中的JSON文档的�
 
    
 
-5. 方法get_index_dataguide()可以以两种格式返回存储在JSON搜索索引中的Dataguide。我们可以比较一下两种格式的区别。
+5. 方法`get_index_dataguide()`可以以两种格式返回存储在JSON搜索索引中的Dataguide。我们可以比较一下两种格式的区别。
 
    ```
    select DBMS_JSON.GET_INDEX_DATAGUIDE('J_PURCHASEORDER', 'PO_DOCUMENT', DBMS_JSON.FORMAT_HIERARCHICAL, DBMS_JSON.PRETTY ) "HIERARCHICAL DATA GUIDE" from dual;
@@ -621,7 +625,7 @@ JSON Dataguide允许您发现有关存储在Oracle数据库中的JSON文档的�
 
    
 
-6. 下面使用create_view_on_path过程根据Dataguide中的信息创建关系视图。
+6. 下面使用`create_view_on_path`过程根据Dataguide中的信息创建关系视图。
 
    ```
    begin 
