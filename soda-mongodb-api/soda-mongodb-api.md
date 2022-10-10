@@ -10,7 +10,7 @@ Oracle Database API for MongoDB允许使用MongoDB语言驱动程序和工具连
 
 - OCI账号及相应权限
 
-- 创建AJD或ATP实例（AJD没有BYOL模式）
+- 创建AJD或ATP实例（注：AJD没有BYOL模式，ATP包含AJD的所有功能）
 
   
 
@@ -43,19 +43,40 @@ Oracle Database API for MongoDB允许使用MongoDB语言驱动程序和工具连
 
     ![image-20221009130515966](images/image-20221009130515966.png)
 
-7. 选择数据库用户管理。
+7. 选择SQL Worksheet。
 
-    ![image-20221009115631630](images/image-20221009115631630.png)
+    ![image-20221010101903784](images/image-20221010101903784.png)
 
-8. 输入用户名、密码、允许Web Access，允许使用的表空间为unlimited。
+8. 拷贝以下命令创建新用户并授权。要使用REST SODA需要授权SODA_APP角色。
 
-    ![image-20221009115811930](images/image-20221009115811930.png)
+    ```
+    -- USER SQL
+    CREATE USER USER1 IDENTIFIED BY WelcomePTS_2022#;
+    
+    -- ADD ROLES
+    GRANT DWROLE TO USER1;
+    GRANT SODA_APP TO USER1;
+    
+    -- ENABLE REST
+    BEGIN
+        ORDS.ENABLE_SCHEMA(
+            p_enabled => TRUE,
+            p_schema => 'USER1',
+            p_url_mapping_type => 'BASE_PATH',
+            p_url_mapping_pattern => 'user1',
+            p_auto_rest_auth=> TRUE
+        );
+        commit;
+    END;
+    /
+    
+    -- QUOTA
+    ALTER USER USER1 QUOTA UNLIMITED ON DATA;
+    ```
 
-9. 在授予角色页面选择SODA_APP，点击创建用户。
+    
 
-    ![image-20221009120009949](images/image-20221009120009949.png)
-
-10. asdf
+9. asdf
 
 ## Task 2: JSON Collections
 
@@ -260,7 +281,7 @@ Oracle Database API for MongoDB允许使用MongoDB语言驱动程序和工具连
 
 5. 注意：如果你的密码包含特殊字符，请按照下面的表格进行替换
 
-    ![image-20221009150325146](images/image-20221009150325146.png)
+    ![image-20221010092031250](images/image-20221010092031250.png)
 
 6. 将MongoDB URI保存到环境变量
 
@@ -279,7 +300,7 @@ Oracle Database API for MongoDB允许使用MongoDB语言驱动程序和工具连
 
     
 
-8. 运行Mongo Shell
+8. 运行Mongo Shell，我们可以像访问MongoDB一样访问Oracle JSON DB
 
     ```
     mongosh $URI
