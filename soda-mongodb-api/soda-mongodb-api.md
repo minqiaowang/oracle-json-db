@@ -268,7 +268,7 @@ Oracle Database API for MongoDB允许使用MongoDB语言驱动程序和工具连
 
     
 
-4. 修改你之前拷贝的Oracle Database API for MongoDB URI，将[user:password@]改为自己的用户名和密码，将[user]改为自己的用户名：
+4. 修改你之前拷贝的Oracle Database API for MongoDB URI，将[user:password@]改为自己的用户名和密码，将[user]改为自己的用户名。
 
     ```
     mongodb://user1:WelcomePTS_2022%23@X3F1WIW0ZP5WYNV-ATPTEST.adb.ap-seoul-1.oraclecloudapps.com:27017/user1?authMechanism=PLAIN&authSource=$external&ssl=true&retryWrites=false&loadBalanced=true
