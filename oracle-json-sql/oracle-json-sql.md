@@ -292,7 +292,7 @@ JSON 数据是无模式的（schemaless），即使使用数据库模式来定�
    BEGIN
      dbms_cloud.create_credential(
        credential_name => 'OBJ_STORE_CRED',
-       username => 'minqiao.wang@oracle.com',
+       username => 'firstname.lastname@email.com',
        password => '+.WpZJFF24-Fd3K_k1l.'
      );
    END;
