@@ -43,11 +43,11 @@ Oracle Database API for MongoDB允许使用MongoDB语言驱动程序和工具连
 
     ![image-20221009130515966](images/image-20221009130515966.png)
 
-7. 选择SQL Worksheet。
+7. （如果已创建了实验用户，可以忽略此步骤）选择SQL Worksheet。
 
     ![image-20221010101903784](images/image-20221010101903784.png)
 
-8. 拷贝以下命令创建新用户并授权。要使用REST SODA需要授权SODA_APP角色。
+8. （如果已创建了实验用户，可以忽略此步骤）拷贝以下命令创建新用户并授权。要使用REST SODA需要授权SODA_APP角色。
 
     ```
     -- USER SQL
@@ -75,8 +75,6 @@ Oracle Database API for MongoDB允许使用MongoDB语言驱动程序和工具连
     ```
 
     
-
-9. asdf
 
 ## Task 2: JSON Collections
 

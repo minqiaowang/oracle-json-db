@@ -13,7 +13,7 @@ JSON 数据是无模式的（schemaless），即使使用数据库模式来定�
 ### 先决条件
 
 - OCI相应的账号及权限
-- 在OCI上创建ADB实例
+- 在OCI上创建ADB实例（本实验推荐使用ATP。ADW目前不支持MongoDB API，ATP包括全部AJD的功能，AJD没有BYOL模式）
 
 
 
@@ -35,6 +35,7 @@ JSON 数据是无模式的（schemaless），即使使用数据库模式来定�
    
    -- ADD ROLES
    GRANT DWROLE TO USER1;
+   GRANT SODA_APP TO USER1;
    
    -- ENABLE REST
    BEGIN
