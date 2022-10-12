@@ -341,7 +341,7 @@ JSON 数据是无模式的（schemaless），即使使用数据库模式来定�
 
 
 
-## Task 6: 使用`JSON_VALUE` 和 `JSON_QUERY`查询JSON数据
+## Task 6: 使用JSON_VALUE和 JSON_QUERY查询JSON数据
 
 JSON 函数 `json_value` 和 `json_query` 可以用于更复杂的查询。 如果您提供的路径表达式与查询的 JSON 数据不匹配，它们可能会返回 NULL 或引发错误。 它们接受可选子句来指定返回值的数据类型（RETURNING 子句），是否将多个值包装为数组（wrapper子句），一般如何处理错误（ON ERROR 子句），以及如何处理丢失的 JSON 字段（ON EMPTY 子句）。
 
@@ -439,7 +439,7 @@ JSON 函数 `json_value` 和 `json_query` 可以用于更复杂的查询。 如�
 
    
 
-## Task 7: 使用`JSON_TABLE`以关系型方式访问JSON数据
+## Task 7: 使用JSON_TABLE以关系型方式访问JSON数据
 
 `JSON_TABLE`运算符用于SQL语句的FROM子句中。它支持创建JSON内容的内联关系视图。`JSON_TABLE`运算符使用一组JSON路径表达式将JSON文档中的内容映射到视图中的列中。一旦JSON文档的内容被展开为列，SQL的所有功能就可以在JSON文档内容上发挥作用。
 
@@ -495,7 +495,7 @@ JSON 函数 `json_value` 和 `json_query` 可以用于更复杂的查询。 如�
 
    
 
-## Task 8: 使用`JSON_EXISTS`过滤结果集
+## Task 8: 使用JSON_EXISTS过滤结果集
 
 `JSON_EXISTS`运算符用于SQL语句的WHERE子句中。它用于测试JSON文档是否包含与提供的JSON路径表达式匹配的内容。
 
