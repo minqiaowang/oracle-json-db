@@ -86,15 +86,15 @@ Oracle Database API for MongoDB允许使用MongoDB语言驱动程序和工具连
 
     ![image-20221009131355824](images/image-20221009131355824.png)
 
-3. 输入Collection名：products，选择MongoDB兼容模式，点击Create
+3. 输入**Collection**名：products，选择**MongoDB兼容模式**，点击**Create**
 
     ![image-20221009134931036](images/image-20221009134931036.png)
 
-4. 双击products对象，确保当前在JSON - products的worksheet中
+4. 双击**products**对象，确保当前在**JSON - products**的worksheet中
 
     ![image-20221009135249161](images/image-20221009135249161.png)
 
-5. 点击New JSON Document图标
+5. 点击**New JSON Document**图标
 
     ![image-20221009135421270](images/image-20221009135421270.png)
 
@@ -117,7 +117,7 @@ Oracle Database API for MongoDB允许使用MongoDB语言驱动程序和工具连
 
     
 
-7. 粘贴到新建JSON文档面板中，点击Create
+7. 粘贴到新建JSON文档面板中，点击**Create**
 
     ![image-20221009135534015](images/image-20221009135534015.png)
 
@@ -227,17 +227,13 @@ Oracle Database API for MongoDB允许使用MongoDB语言驱动程序和工具连
 
     
 
-17. 组合条件查询
+17. 组合条件查询，查询类型是movie价格高于5块的文档。
 
     ```
     {"$and":[{"price":{"$lte":5}}, {"type":"movie"}]}
     ```
 
     
-
-18. asdf
-
-19. sdaf
 
     
 
@@ -256,7 +252,7 @@ Oracle Database API for MongoDB允许使用MongoDB语言驱动程序和工具连
 
     ![image-20221009145327308](images/image-20221009145327308.png)
 
-3. 运行下面命令安装MongoDB工具，MongoDB工具的最新版本URL链接可以在[https://www.mongodb.com/try/download/database-tools ](https://www.mongodb.com/try/download/database-tools )中查询到
+3. 运行下面命令安装MongoDB工具，MongoDB工具的最新版本URL链接可以在 [https://www.mongodb.com/try/download/database-tools ](https://www.mongodb.com/try/download/database-tools )中查询到。
 
     ```
     curl https://downloads.mongodb.com/compass/mongosh-1.5.1-linux-x64.tgz -o mongosh.tgz
@@ -268,7 +264,7 @@ Oracle Database API for MongoDB允许使用MongoDB语言驱动程序和工具连
 
     
 
-4. 修改你之前拷贝的Oracle Database API for MongoDB URI，将[user:password@]改为自己的用户名和密码，将[user]改为自己的用户名。
+4. 修改你之前拷贝的Oracle Database API for MongoDB URI，将**[user:password@]**改为自己的用户名和密码，将**[user]**改为自己的用户名。
 
     ```
     mongodb://user1:WelcomePTS_2022%23@X3F1WIW0ZP5WYNV-ATPTEST.adb.ap-seoul-1.oraclecloudapps.com:27017/user1?authMechanism=PLAIN&authSource=$external&ssl=true&retryWrites=false&loadBalanced=true
@@ -281,7 +277,7 @@ Oracle Database API for MongoDB允许使用MongoDB语言驱动程序和工具连
 
     ![image-20221010092031250](images/image-20221010092031250.png)
 
-6. 将MongoDB URI保存到环境变量
+6. 将MongoDB URI保存到环境变量。
 
     ```
     export URI='mongodb://user1:WelcomePTS_2022%23@X3F1WIW0ZP5WYNV-ATPTEST.adb.ap-seoul-1.oraclecloudapps.com:27017/user1?authMechanism=PLAIN&authSource=$external&ssl=true&retryWrites=false&loadBalanced=true'
@@ -298,7 +294,7 @@ Oracle Database API for MongoDB允许使用MongoDB语言驱动程序和工具连
 
     
 
-8. 运行Mongo Shell，我们可以像访问MongoDB一样访问Oracle JSON DB
+8. 运行Mongo Shell，我们可以像访问MongoDB一样访问Oracle JSON DB。
 
     ```
     mongosh $URI
@@ -306,7 +302,7 @@ Oracle Database API for MongoDB允许使用MongoDB语言驱动程序和工具连
 
     ![image-20221009151615362](images/image-20221009151615362.png)
 
-9. 查看数据库中的collections
+9. 查看数据库中的**collections**。
 
     ```
     show collections
@@ -314,7 +310,7 @@ Oracle Database API for MongoDB允许使用MongoDB语言驱动程序和工具连
 
     
 
-10. 计算products中的文档数
+10. 计算products中的文档数。
 
     ```
     db.products.countDocuments()
@@ -322,7 +318,7 @@ Oracle Database API for MongoDB允许使用MongoDB语言驱动程序和工具连
 
     
 
-11. 查询id为100的产品
+11. 查询id为100的产品。
 
     ```
     db.products.find( { "_id": 100} )
@@ -330,7 +326,7 @@ Oracle Database API for MongoDB允许使用MongoDB语言驱动程序和工具连
 
     
 
-12. 查询价格大于$11的产品
+12. 查询价格大于11块钱的产品。
 
     ```
     db.products.find( {"price": {"$gt": 11} } )
@@ -346,7 +342,7 @@ Oracle Database API for MongoDB允许使用MongoDB语言驱动程序和工具连
 
     
 
-14. sdaf
+    
 
 ## Task 4: 使用SODA for REST
 
@@ -370,7 +366,7 @@ Oracle Database API for MongoDB允许使用MongoDB语言驱动程序和工具连
 
     
 
-4. 页面返回结果
+4. 页面返回结果，显示所有产品信息。
 
     ![image-20221009154800369](images/image-20221009154800369.png)
 
@@ -386,7 +382,7 @@ Oracle Database API for MongoDB允许使用MongoDB语言驱动程序和工具连
 
     ![image-20221009155159024](images/image-20221009155159024.png)
 
-7. 需要增加`-u`认证选项，如下所示。之所以前面浏览器没有出错，是因为我们已经认证登录了Database Actions。
+7. 需要增加`-u`认证选项，如下所示。（之所以前面浏览器没有出错，是因为我们已经认证登录了Database Actions。）
 
     ```
     curl -X GET https://x3f1wiw0zp5wynv-atptest.adb.ap-seoul-1.oraclecloudapps.com/ords/user1/soda/latest -u user1:WelcomePTS_2022#
@@ -394,7 +390,7 @@ Oracle Database API for MongoDB允许使用MongoDB语言驱动程序和工具连
 
     ![image-20221009155522236](images/image-20221009155522236.png)
 
-8. 我们可以通过curl来做QBE查询。通过post一个请求，增加`?action=query`参数来做查询。
+8. 我们可以通过curl来做QBE查询。通过post一个请求，增加`?action=query`参数来做查询，返回单价大于5块钱的商品。
 
     ```
     curl -X POST -H "Content-Type: application/json" --data '{"price":{"$gt":5}}' https://x3f1wiw0zp5wynv-atptest.adb.ap-seoul-1.oraclecloudapps.com/ords/user1/soda/latest/products?action=query -u user1:WelcomePTS_2022#
@@ -402,7 +398,7 @@ Oracle Database API for MongoDB允许使用MongoDB语言驱动程序和工具连
 
     
 
-9. 我们也可以通过post来插入一个新的文档：
+9. 我们也可以通过post来插入一个新的文档，增加一个新的商品。
 
     ```
     curl -X POST -H "Content-Type: application/json" --data '{"id": 1414,"type": "Toy","title": "E.T. the Extra-Terrestrial","condition": "washed","price": 50.00,"description": "50cm tall plastic figure"}' https://x3f1wiw0zp5wynv-atptest.adb.ap-seoul-1.oraclecloudapps.com/ords/user1/soda/latest/products -u user1:WelcomePTS_2022#
