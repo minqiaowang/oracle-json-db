@@ -267,7 +267,7 @@ Oracle Database API for MongoDB允许使用MongoDB语言驱动程序和工具连
 4. 修改你之前拷贝的Oracle Database API for MongoDB URI，将**[user:password@]**改为自己的用户名和密码，将**[user]**改为自己的用户名。
 
     ```
-    mongodb://user1:WelcomePTS_2022%23@X3F1WIW0ZP5WYNV-ATPTEST.adb.ap-seoul-1.oraclecloudapps.com:27017/user1?authMechanism=PLAIN&authSource=$external&ssl=true&retryWrites=false&loadBalanced=true
+    mongodb://user1:WelcomePTS_2022%23@X***V-ATPTEST.adb.ap-seoul-1.oraclecloudapps.com:27017/user1?authMechanism=PLAIN&authSource=$external&ssl=true&retryWrites=false&loadBalanced=true
     
     ```
 
@@ -280,7 +280,7 @@ Oracle Database API for MongoDB允许使用MongoDB语言驱动程序和工具连
 6. 将MongoDB URI保存到环境变量。
 
     ```
-    export URI='mongodb://user1:WelcomePTS_2022%23@X3F1WIW0ZP5WYNV-ATPTEST.adb.ap-seoul-1.oraclecloudapps.com:27017/user1?authMechanism=PLAIN&authSource=$external&ssl=true&retryWrites=false&loadBalanced=true'
+    export URI='mongodb://user1:WelcomePTS_2022%23@X***V-ATPTEST.adb.ap-seoul-1.oraclecloudapps.com:27017/user1?authMechanism=PLAIN&authSource=$external&ssl=true&retryWrites=false&loadBalanced=true'
     ```
 
     
@@ -349,7 +349,7 @@ Oracle Database API for MongoDB允许使用MongoDB语言驱动程序和工具连
 1. 将之前拷贝的REST 和ORDS URL链接，后面附上`/user1/soda/latest`。如下所示
 
     ```
-    https://x3f1wiw0zp5wynv-atptest.adb.ap-seoul-1.oraclecloudapps.com/ords/user1/soda/latest
+    https://x***v-atptest.adb.ap-seoul-1.oraclecloudapps.com/ords/user1/soda/latest
     ```
 
     
@@ -361,7 +361,7 @@ Oracle Database API for MongoDB允许使用MongoDB语言驱动程序和工具连
 3. 在URL后面再加上`/products`，如下所示
 
     ```
-    https://x3f1wiw0zp5wynv-atptest.adb.ap-seoul-1.oraclecloudapps.com/ords/user1/soda/latest/products
+    https://x***v-atptest.adb.ap-seoul-1.oraclecloudapps.com/ords/user1/soda/latest/products
     ```
 
     
@@ -373,7 +373,7 @@ Oracle Database API for MongoDB允许使用MongoDB语言驱动程序和工具连
 5. 在OCI Cloud Shell里运行下列命令，注意：REST URL是你自己的URL
 
     ```
-    curl -X GET https://x3f1wiw0zp5wynv-atptest.adb.ap-seoul-1.oraclecloudapps.com/ords/user1/soda/latest
+    curl -X GET https://x***v-atptest.adb.ap-seoul-1.oraclecloudapps.com/ords/user1/soda/latest
     ```
 
     
@@ -385,7 +385,7 @@ Oracle Database API for MongoDB允许使用MongoDB语言驱动程序和工具连
 7. 需要增加`-u`认证选项，如下所示。（之所以前面浏览器没有出错，是因为我们已经认证登录了Database Actions。）
 
     ```
-    curl -X GET https://x3f1wiw0zp5wynv-atptest.adb.ap-seoul-1.oraclecloudapps.com/ords/user1/soda/latest -u user1:WelcomePTS_2022#
+    curl -X GET https://x***v-atptest.adb.ap-seoul-1.oraclecloudapps.com/ords/user1/soda/latest -u user1:WelcomePTS_2022#
     ```
 
     ![image-20221009155522236](images/image-20221009155522236.png)
@@ -393,7 +393,7 @@ Oracle Database API for MongoDB允许使用MongoDB语言驱动程序和工具连
 8. 我们可以通过curl来做QBE查询。通过post一个请求，增加`?action=query`参数来做查询，返回单价大于5块钱的商品。
 
     ```
-    curl -X POST -H "Content-Type: application/json" --data '{"price":{"$gt":5}}' https://x3f1wiw0zp5wynv-atptest.adb.ap-seoul-1.oraclecloudapps.com/ords/user1/soda/latest/products?action=query -u user1:WelcomePTS_2022#
+    curl -X POST -H "Content-Type: application/json" --data '{"price":{"$gt":5}}' https://x***v-atptest.adb.ap-seoul-1.oraclecloudapps.com/ords/user1/soda/latest/products?action=query -u user1:WelcomePTS_2022#
     ```
 
     
@@ -401,7 +401,7 @@ Oracle Database API for MongoDB允许使用MongoDB语言驱动程序和工具连
 9. 我们也可以通过post来插入一个新的文档，增加一个新的商品。
 
     ```
-    curl -X POST -H "Content-Type: application/json" --data '{"id": 1414,"type": "Toy","title": "E.T. the Extra-Terrestrial","condition": "washed","price": 50.00,"description": "50cm tall plastic figure"}' https://x3f1wiw0zp5wynv-atptest.adb.ap-seoul-1.oraclecloudapps.com/ords/user1/soda/latest/products -u user1:WelcomePTS_2022#
+    curl -X POST -H "Content-Type: application/json" --data '{"id": 1414,"type": "Toy","title": "E.T. the Extra-Terrestrial","condition": "washed","price": 50.00,"description": "50cm tall plastic figure"}' https://x***v-atptest.adb.ap-seoul-1.oraclecloudapps.com/ords/user1/soda/latest/products -u user1:WelcomePTS_2022#
     ```
 
     
